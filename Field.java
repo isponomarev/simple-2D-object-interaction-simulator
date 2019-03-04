@@ -18,8 +18,8 @@ public class Field {
 
     public void setFigure(Figure... figure) throws Exception {
         for (Figure f : figure) {
-            if (!checkInside(f)) throw new Exception("Object #" + f.getId() + " is out of the field");
-            if (checkIntersect(f)) throw new Exception("Object #" + f.getId() + " intersects with another object");
+            if (!checkInside(f)) throw new Exception("Object is out of the field");
+            if (checkIntersect(f)) throw new Exception("Object intersects with another object");
             fieldObjects.add(f);
         }
     }
@@ -35,7 +35,7 @@ public class Field {
 
     public boolean checkIntersect(Figure other) {                 // check position to set the figure
         for (Figure f : this.fieldObjects) {
-            if (other.getCollision(f))
+            if (f.getCollision(other))
                 return true;
         }
         return false;
@@ -48,9 +48,8 @@ public class Field {
             f.move(time - timeBefore);
             for (Figure anyFigure : this.fieldObjects) {
                 if (anyFigure != f) {
-                    if (f.getCollision(anyFigure)) {
-                        f.rebound(anyFigure);
-                    }
+                    if (anyFigure.getCollision(f))
+                        anyFigure.rebound(f);
                 }
             }
         }
@@ -87,7 +86,7 @@ public class Field {
         return timeBefore;
     }
 
-    public void reflection(Figure figure, int signVx, int signVy) {          // reflection vector from border
+    private void reflection(Figure figure, int signVx, int signVy) {          // reflection vector from border
         figure.setVx(figure.getVx() * signVx);
         figure.setVy(figure.getVy() * signVy);
     }

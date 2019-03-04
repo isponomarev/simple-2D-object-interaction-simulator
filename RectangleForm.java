@@ -20,6 +20,14 @@ public class RectangleForm extends Figure {
         return arr;
     }
 
+    @Override
+    boolean isInside(double x, double y) {
+        return (x > this.getX() - this.width/2) &&
+                (x < this.getX() + this.width/2) &&
+                (y > this.getY() - this.height/2) &&
+                (y < this.getY() + this.height/2);
+    }
+
     public double getWidth() {
         return width;
     }
@@ -31,9 +39,9 @@ public class RectangleForm extends Figure {
     @Override
     public String toString() {
         return "#" + getId() + " RECTANGLE: " + "\n" +
-                " [x=" + getX() + ", y=" + getY() +
+                " [x=" + getRoundingValue(getX()) + ", y=" + getRoundingValue(getY()) +
                 ", width=" + width + ", height=" + height + "]" + "\n" +
-                " Speed: Vx=" + getVx() + ", Vy=" + getVy() + "\n" +
+                " Speed: Vx=" + getRoundingValue(getVx()) + ", Vy=" + getRoundingValue(getVy()) + "\n" +
                 " Weight=" + getM() + ", Area=" + getArea();
     }
 

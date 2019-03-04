@@ -14,6 +14,7 @@ public abstract class Figure {
 
     abstract double getArea();
     abstract double[] getMainParameters();              // parameters for finding the center of gravity of figure
+    abstract boolean isInside(double x, double y);      // point inside the figure?
 
     public void move(double time){
         this.x += this.vx * time;
@@ -30,14 +31,18 @@ public abstract class Figure {
         other.vy = (2 * this.m * firstY + (other.m - this.m) * other.vy) / (other.m + this.m);
     }
 
-    public boolean getCollision(Figure other){          // check collision of 2 figures
-        double[] params1 = this.getMainParameters();
-        double[] params2 = other.getMainParameters();
-        // sqrt [ (x1 - x2)^2 + (y1 - y2)^2 ] < R1 + R2 (or W1 + W2, or H1 + H2)
-        return ((Math.sqrt(Math.pow(this.getX() - other.getX(), 2)
-                + Math.pow(this.getY() - other.getY(), 2)) < params1[0] + params2[0]) ||
-            (Math.sqrt(Math.pow(this.getX() - other.getX(), 2)
-                + Math.pow(this.getY() - other.getY(), 2)) < params1[1] + params2[1]));
+    public boolean getCollision(Figure other){        // check 9 points of figure (center, N, NE, E, SE, S, SW, W, NW)
+        double paramX = other.getMainParameters()[0];
+        double paramY = other.getMainParameters()[1];
+        return this.isInside(other.x+paramX, other.y+paramY) ||
+                this.isInside(other.x+paramX, other.y-paramY) ||
+                this.isInside(other.x-paramX, other.y+paramY) ||
+                this.isInside(other.x-paramX, other.y-paramY) ||
+                this.isInside(other.x, other.y+paramY) ||
+                this.isInside(other.x, other.y-paramY) ||
+                this.isInside(other.x+paramX, other.y) ||
+                this.isInside(other.x-paramX, other.y) ||
+                this.isInside(other.x, other.y);
     }
 
     public int getId() {
@@ -70,6 +75,10 @@ public abstract class Figure {
 
     public void setVy(double vy) {
         this.vy = vy;
+    }
+
+    public double getRoundingValue(double value){
+        return Math.round(value * 100d)/100d;
     }
 
 }

@@ -19,6 +19,13 @@ public class CircleForm extends Figure {
         return arr;
     }
 
+    @Override
+    boolean isInside(double x, double y) {
+        // (x1 - x2)^2 + (y1 - y2)^2 < R^2
+        return Math.sqrt(Math.pow((x - this.getX()), 2)
+                + Math.pow((y - this.getY()), 2)) < this.radius;
+    }
+
     public double getRadius() {
         return radius;
     }
@@ -26,9 +33,9 @@ public class CircleForm extends Figure {
     @Override
     public String toString() {
         return "#" + getId() + " CIRCLE: " + "\n" +
-                " [x=" + getX() + ", y=" + getY() +
+                " [x=" + getRoundingValue(getX()) + ", y=" + getRoundingValue(getY()) +
                 ", radius=" + radius + "]" + "\n" +
-                " Speed: Vx=" + getVx() + ", Vy=" + getVy() + "\n" +
+                " Speed: Vx=" + getRoundingValue(getVx()) + ", Vy=" + getRoundingValue(getVy()) + "\n" +
                 " Weight=" + getM() + ", Area=" + getArea();
     }
 

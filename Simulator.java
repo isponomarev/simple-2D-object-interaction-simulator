@@ -3,11 +3,11 @@ public class Simulator {
 
 //    public static void main(String[] args) {
 //        Simulator sim = new Simulator();
-//        Field field = new Field(1000, 1000);
-//        sim.prepareField(field);
+//        sim.prepareField(800,600);
 //    }
-//
-//    public void prepareField(Field field){
+
+//    public Field prepareField(int width, int height){
+//        Field field = new Field(width, height);
 //        RectangleForm rect1 = new RectangleForm(5, 50, 50, 50, 50, 100, 100);
 //        RectangleForm rect2 = new RectangleForm(15, 250, 250, -50, -50, 125, 125);
 //        CircleForm circle1 = new CircleForm(2, 100, 750, 0, -50, 50);
@@ -26,6 +26,7 @@ public class Simulator {
 //                System.out.println("CRASH!");
 //            field.printFieldObjects();
 //        }
+//        return field;
 //    }
 
     public double getTime(){
